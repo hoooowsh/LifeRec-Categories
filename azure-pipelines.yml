@@ -12,6 +12,6 @@ steps:
     git push --prune https://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@github.com/hoooowsh/LifeRec-Categories \
         +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
   displayName: 'Push to GitHub'
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
   env:
     GITHUB_TOKEN: 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
