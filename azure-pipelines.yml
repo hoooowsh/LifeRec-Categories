@@ -8,6 +8,6 @@ pool:
 
 steps:
 - bash: |
-    git push https://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@github.com/hoooowsh/LifeRec-Categories \
+    git push https://hoooowsh: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@github.com/hoooowsh/LifeRec-Categories \
         +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
   displayName: 'Copy to Github'
