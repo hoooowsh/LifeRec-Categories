@@ -7,12 +7,12 @@ pool:
   name: Agent-Sheng
 
 jobs:
-- job: ExampleJobName
+- job: Build
   steps:
   - checkout: self
     persistCredentials: true
 
   - bash: |
-      git push https://$(GITHUB_PAT)@github.com/hoooowsh/LifeRec-Categories \
-          +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
+      git push git@github.com:hoooowsh/LifeRec-Categories.git \
+        +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
     displayName: 'Copy to Github'
