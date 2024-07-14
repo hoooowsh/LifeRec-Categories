@@ -6,8 +6,13 @@ trigger:
 pool:
   name: Agent-Sheng
 
-steps:
-- bash: |
-    git push https://$(GITHUB_PAT)@github.com/hoooowsh/LifeRec-Categories \
-        +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
-  displayName: 'Copy to Github'
+jobs:
+- job: ExampleJobName
+  steps:
+  - checkout: self
+    persistCredentials: true
+
+  - bash: |
+      git push https://$(GITHUB_PAT)@github.com/hoooowsh/LifeRec-Categories \
+          +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
+    displayName: 'Copy to Github'
