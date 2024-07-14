@@ -11,9 +11,11 @@ steps:
 - script: |
     git config --global user.email "haosheng950403@gmail.com"
     git config --global user.name "hoooowsh"
-    git remote add github https://github.com/hoooowsh/LifeRec-Categories.git
+    # Check if the remote 'github' exists, add it if it doesn't
+    git remote | grep -q github || git remote add github https://github.com/hoooowsh/LifeRec-Categories.git
     git fetch github
-    git push github HEAD:main --force
+    # Fully qualify the refspec for the push command
+    git push github HEAD:refs/heads/main --force
   env:
     GITHUB_TOKEN: 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
   displayName: 'Sync to GitHub'
