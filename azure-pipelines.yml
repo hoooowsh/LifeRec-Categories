@@ -13,7 +13,7 @@ jobs:
     persistCredentials: true
 
   - bash: |
-      git push mirror git@github.com:hoooowsh/LifeRec-Categories.git \
+      git push mirror --progress --prune git@github.com:hoooowsh/LifeRec-Categories.git \
         +refs/remotes/origin/*:refs/heads/*
     displayName: 'Copy to Github'
     condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
