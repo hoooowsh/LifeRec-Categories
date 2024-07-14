@@ -8,10 +8,12 @@ pool:
 
 steps:
 - checkout: self
-- bash: |
-    git push --prune https://hoooowsh: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@github.com/hoooowsh/LifeRec-Categories.git \
-        +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*
-  displayName: 'Push to GitHub'
-  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+- script: |
+    git config --global user.email "haosheng950403@gmail.com"
+    git config --global user.name "hoooowsh"
+    git remote add github https://github.com/hoooowsh/LifeRec-Categories.git
+    git fetch github
+    git push github HEAD:main --force
   env:
-    GITHUB_TOKEN: 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
+    GITHUB_TOKEN: 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
+  displayName: 'Sync to GitHub'
