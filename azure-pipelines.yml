@@ -9,8 +9,6 @@ pool:
 jobs:
 - job: Build
   steps:
-  - checkout: self
-    persistCredentials: true
 
   - bash: |
       git push --progress --prune git@github.com:hoooowsh/LifeRec-Categories.git \
