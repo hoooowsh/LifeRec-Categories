@@ -7,18 +7,13 @@ pool:
   name: Agent-Sheng
 
 jobs:
-- job: PushToGithub
+- job: Build
   steps:
   - checkout: self
     persistCredentials: true
-  
+
   - bash: |
-      echo  '$(System.DefaultWorkingDirectory)'
-        dir
-        dir subfoldername
-      git clone --mirror https://dev.azure.com/LifeRec/LifeRecApp/_git/LifeRec-Categories ~/LifeRec-Categories
-      cd ~/LifeRec-Categories
-      git remote add mirror git@github.com:hoooowsh/LifeRec-Categories.git
-      git push mirror --progress --prune +refs/heads/*:refs/heads/* +refs/tags/*:refs/tags/*
+      git push --progress --prune git@github.com:hoooowsh/LifeRec-Categories.git \
+        +refs/remotes/origin/*:refs/heads/*
     displayName: 'Copy to Github'
     condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
