@@ -11,8 +11,11 @@ jobs:
   steps:
   - checkout: self
     persistCredentials: true
-
+  
   - bash: |
+      echo  '$(System.DefaultWorkingDirectory)'
+        dir
+        dir subfoldername
       git clone --mirror https://dev.azure.com/LifeRec/LifeRecApp/_git/LifeRec-Categories ~/LifeRec-Categories
       cd ~/LifeRec-Categories
       git remote add mirror git@github.com:hoooowsh/LifeRec-Categories.git
