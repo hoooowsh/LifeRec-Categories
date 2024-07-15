@@ -8,6 +8,15 @@
 
 # Development Logs
 ## July 13 - 14 
+#### Setup local runner
+- Follow the instruction on ADO, it is very clear
+- Useful command lines
+    ```
+    # Config runner
+    ./config.sh
+    # run the runner shell
+    ./run.sh
+    ```
 #### Sync ADO to Github
 1. Using SSH to push to github instead of https, https has issues with PAT and credentials
 2. Do not use the ADO default checkout step, because it will set the commit as the [New Ref], meaning the Ref will have name with 40 hex code long, Github does not let clients name the Ref 40 hex code long
