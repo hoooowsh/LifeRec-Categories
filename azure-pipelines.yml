@@ -9,7 +9,7 @@ pool:
 jobs:
 - job: PushToGithub
   steps:
-  - checkout: none
+  - checkout: self
 
   - script: |
       git clone --mirror https://dev.azure.com/LifeRec/LifeRecApp/_git/LifeRec-Categories $(Build.SourcesDirectory)/LifeRec-Categories
