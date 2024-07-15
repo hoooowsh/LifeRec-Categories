@@ -1,3 +1,5 @@
+# LifeRec-Categories Intro
+- This is a micro-service for LifeRec, mainly serve for categories related CRUD Operations
 
 # Costs analysis
 ### Database
