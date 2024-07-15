@@ -11,11 +11,10 @@ jobs:
   steps:
   - checkout: none
 
-  - bash: |
+  - script: |
       git clone --mirror https://dev.azure.com/LifeRec/LifeRecApp/_git/LifeRec-Categories $(Build.SourcesDirectory)/LifeRec-Categories
       cd $(Build.SourcesDirectory)/LifeRec-Categories
       git remote add mirror git@github.com:hoooowsh/LifeRec-Categories.git
       git push mirror --progress --prune +refs/heads/*:refs/heads/* +refs/tags/*:refs/tags/*
     displayName: 'Copy to Github'
     condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
-    workingDirectory: $(Build.SourcesDirectory)
