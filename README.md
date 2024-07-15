@@ -1,5 +1,12 @@
-# Development Logs
 
+# Costs analysis
+### Database
+- MongoDB free tier
+### AKS
+- $7 for a single node
+
+
+# Development Logs
 ## July 13 - 14 
 #### Sync ADO to Github
 1. Using SSH to push to github instead of https, https has issues with PAT and credentials
@@ -11,4 +18,7 @@
 
 #### Setup SSH 
 1. generate SSH credential files on local machine
-2. Copy/paster the credential to Github
+2. Copy/paste the credential to Github
+
+#### MongoDB set up
+- Public IP (Ex: Library) cannot connect to MongoDB even MongoDB is open for all IP addresses
