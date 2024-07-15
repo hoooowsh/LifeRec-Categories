@@ -1,5 +1,16 @@
 # LifeRec-Categories Intro
-- This is a micro-service for LifeRec, mainly serve for categories related CRUD Operations
+This is a micro-service for LifeRec, mainly serve for categories related CRUD Operations
+ADO: https://dev.azure.com/LifeRec/LifeRecApp
+Github: https://github.com/hoooowsh/LifeRec-Categories
+
+## Tech stack
+- C#
+- .Net
+- MongoDB
+- Azure Active Directory
+- Docker
+- AKS
+- Azure Devops
 
 # Costs analysis
 ### Database
