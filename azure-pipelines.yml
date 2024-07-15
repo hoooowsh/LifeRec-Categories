@@ -10,6 +10,7 @@ jobs:
 - job: PushToGithub
   steps:
   - checkout: self
+    persistCredentials: true
 
   - script: |
       git clone --mirror https://dev.azure.com/LifeRec/LifeRecApp/_git/LifeRec-Categories $(Build.SourcesDirectory)/LifeRec-Categories
