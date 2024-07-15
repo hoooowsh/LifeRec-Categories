@@ -13,8 +13,8 @@ jobs:
     persistCredentials: true
   
   - bash: |
-      git clone --mirror https://dev.azure.com/LifeRec/LifeRecApp/_git/LifeRec-Categories ~/LifeRec-Categories
-      cd ~/LifeRec-Categories
+      git clone --mirror https://dev.azure.com/LifeRec/LifeRecApp/_git/LifeRec-Categories $(build.sourcesdirectory)/LifeRec-Categories
+      cd $(build.sourcesdirectory)/LifeRec-Categories
       git remote add mirror git@github.com:hoooowsh/LifeRec-Categories.git
       git push mirror --progress --prune +refs/heads/*:refs/heads/* +refs/tags/*:refs/tags/*
     displayName: 'Copy to Github'
