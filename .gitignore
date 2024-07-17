@@ -9,6 +9,8 @@ nupkg/
 .vscode/
 /password.txt
 
+*/appsettings.Development.json
+
 # Rider
 .idea/
 
