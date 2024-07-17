@@ -1,6 +1,8 @@
 using System.Net.NetworkInformation;
 using System.Reflection;
+using Categories.API.v1.DBRepo;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,27 @@ builder.Services.AddApiVersioning(options =>
     // Advertise the API versions supported for the particular endpoint
     options.ReportApiVersions = true;
 });
+
+// Init configs
+string MongoDBConnectionString = string.Empty;
+// If the environment is development, use configurations that are stored in the appsettings.Development.json file
+if (builder.Environment.IsDevelopment())
+{
+    MongoDBConnectionString = builder.Configuration.GetConnectionString("MongoDBConnection") ?? throw new ArgumentNullException("MongoDBConnection");
+}
+// If the environment is production, use configurations that are stored in the appsettings.json file
+else
+{
+
+}
+
+// Register MongoDB client as a singleton using the connection string directly
+builder.Services.AddSingleton<IMongoClient>(ServiceProvider =>
+{
+    return new MongoClient(MongoDBConnectionString);
+});
+
+builder.Services.AddScoped<IMongoDBRepository, MongoDBRepository>();
 
 // Inject MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

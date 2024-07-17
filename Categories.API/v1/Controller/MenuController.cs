@@ -1,3 +1,5 @@
+using Categories.API.v1.Model;
+using Categories.API.v1.Request;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +14,21 @@ public class MenuController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("hello")]
-    public async Task<IActionResult> Hello()
+    [HttpPost("create")]
+    public async Task<IActionResult> AddMenu(AddMenuItemRequestModel model)
     {
-        return Ok("Hello World!");
+        try
+        {
+            var request = new AddMenuReq
+            {
+                MenuItem = model
+            };
+            await _mediator.Send(request);
+            return Ok("test");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
