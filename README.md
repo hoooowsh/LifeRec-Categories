@@ -16,8 +16,7 @@ This is a micro-service for LifeRec, mainly serve for categories related CRUD Op
 ### Database
 - MongoDB free tier
 ### AKS
-- $7 for a single node
-
+- At least 30 for a node that can run in AKS, one node can host multiple services and one AKS can have minimum 1 node
 
 # Development Logs
 ## July 13 - 14 
