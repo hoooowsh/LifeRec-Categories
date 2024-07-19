@@ -1,6 +1,7 @@
 using MongoDB.Driver;
 using Categories.API.MongoDBModel;
 using Categories.API.Configuration;
+using Categories.API.Utils;
 
 namespace Categories.API.v1.DBRepo;
 
@@ -22,24 +23,38 @@ public class MongoDBRepository : IMongoDBRepository
 
     public async Task CreateMenuItem(string collectionName, MenuItemDBModel menuItem)
     {
-        // Init collection
-        var collection = _categoriesDatabase.GetCollection<MenuItemDBModel>(collectionName);
+        try
+        {
+            // Init collection
+            var collection = _categoriesDatabase.GetCollection<MenuItemDBModel>(collectionName);
 
-        // Insert the menu item
-        await collection.InsertOneAsync(menuItem);
+            // Insert the menu item
+            await collection.InsertOneAsync(menuItem);
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseException(e.Message);
+        }
     }
 
     public async Task<List<MenuItemDBModel>> GetMenuItemsByOwner(string collectionName, string owner, int page)
     {
-        // Init collection
-        var collection = _categoriesDatabase.GetCollection<MenuItemDBModel>(collectionName);
+        try
+        {
+            // Init collection
+            var collection = _categoriesDatabase.GetCollection<MenuItemDBModel>(collectionName);
 
-        // Get the menu items
-        var menuItems = await collection.Find(x => x.Owner == owner)
-            .SortBy(x => x.CreatedAt)
-            .Skip((page - 1) * MongoDBConstants.PageSize)
-            .Limit(MongoDBConstants.PageSize)
-            .ToListAsync();
-        return menuItems;
+            // Get the menu items
+            var menuItems = await collection.Find(x => x.Owner == owner)
+                .SortBy(x => x.CreatedAt)
+                .Skip((page - 1) * MongoDBConstants.PageSize)
+                .Limit(MongoDBConstants.PageSize)
+                .ToListAsync();
+            return menuItems;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseException(e.Message);
+        }
     }
 }
