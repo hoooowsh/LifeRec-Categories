@@ -15,16 +15,34 @@ public class MenuController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> AddMenu(AddMenuItemRequestModel model)
+    public async Task<IActionResult> AddMenuItem([FromBody] AddMenuItemReqModel model)
     {
         try
         {
-            var request = new AddMenuReq
+            var request = new AddMenuItemReq
             {
-                MenuItem = model
+                model = model
             };
-            await _mediator.Send(request);
-            return Ok("test");
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpGet("get-list")]
+    public async Task<IActionResult> GetMenuItemsByOwner([FromQuery] GetMenuItemsReqModel model)
+    {
+        try
+        {
+            var request = new GetMenuItemsReq
+            {
+                model = model
+            };
+            var result = await _mediator.Send(request);
+            return Ok(result);
         }
         catch (Exception ex)
         {
