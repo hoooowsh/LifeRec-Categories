@@ -55,6 +55,7 @@ builder.Services.AddScoped<IMongoDBRepository, MongoDBRepository>();
 // Inject MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
+builder.Services.AddHealthChecks();
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -72,5 +73,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors();
 app.MapControllers();
-app.MapGet("/", () => "Hello World!");
+
+// Add health checks at http://localhost:5078/health
+app.MapHealthChecks("/health");
+
 app.Run();
