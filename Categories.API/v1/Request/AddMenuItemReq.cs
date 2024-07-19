@@ -3,6 +3,7 @@ using Categories.API.v1.DBRepo;
 using Categories.API.Configuration;
 using Categories.API.MongoDBModel;
 using Categories.API.v1.Model;
+using Categories.API.Utils;
 
 namespace Categories.API.v1.Request;
 
@@ -21,17 +22,24 @@ public class AddMenuItemReqHandler : IRequestHandler<AddMenuItemReq, Unit>
 
     public async Task<Unit> Handle(AddMenuItemReq request, CancellationToken cancellationToken)
     {
-        string collectionName = MongoDBConstants.Collection_CookingMenu;
-        MenuItemDBModel menuItem = new MenuItemDBModel
+        try
         {
-            Name = request.model.Name,
-            Description = request.model.Description,
-            Owner = request.model.Owner,
-            CreatedAt = request.model.CreatedAt,
-            Steps = request.model.Steps,
-            ImgUrl = request.model.ImgUrl
-        };
-        await _mongoDBRepository.CreateMenuItem(collectionName, menuItem);
-        return Unit.Value;
+            string collectionName = MongoDBConstants.Collection_CookingMenu;
+            MenuItemDBModel menuItem = new MenuItemDBModel
+            {
+                Name = request.model.Name,
+                Description = request.model.Description,
+                Owner = request.model.Owner,
+                CreatedAt = request.model.CreatedAt,
+                Steps = request.model.Steps,
+                ImgUrl = request.model.ImgUrl
+            };
+            await _mongoDBRepository.CreateMenuItem(collectionName, menuItem);
+            return Unit.Value;
+        }
+        catch (Exception e)
+        {
+            throw new RequestException(e.Message);
+        }
     }
 }

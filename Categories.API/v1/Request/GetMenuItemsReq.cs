@@ -3,6 +3,7 @@ using MediatR;
 using Categories.API.v1.DBRepo;
 using Categories.API.Configuration;
 using Categories.API.MongoDBModel;
+using Categories.API.Utils;
 
 namespace Categories.API.v1.Request;
 
@@ -21,12 +22,19 @@ public class GetMenuItemsReqHandler : IRequestHandler<GetMenuItemsReq, GetMenuIt
 
     public async Task<GetMenuItemsResModel> Handle(GetMenuItemsReq request, CancellationToken cancellationToken)
     {
-        string collectionName = MongoDBConstants.Collection_CookingMenu;
-        List<MenuItemDBModel> MenuItems = await _mongoDBRepository.GetMenuItemsByOwner(collectionName, request.model.Owner, request.model.Page);
-        GetMenuItemsResModel res = new GetMenuItemsResModel
+        try
         {
-            MenuItems = MenuItems
-        };
-        return res;
+            string collectionName = MongoDBConstants.Collection_CookingMenu;
+            List<MenuItemDBModel> MenuItems = await _mongoDBRepository.GetMenuItemsByOwner(collectionName, request.model.Owner, request.model.Page);
+            GetMenuItemsResModel res = new GetMenuItemsResModel
+            {
+                MenuItems = MenuItems
+            };
+            return res;
+        }
+        catch (Exception e)
+        {
+            throw new RequestException(e.Message);
+        }
     }
 }
