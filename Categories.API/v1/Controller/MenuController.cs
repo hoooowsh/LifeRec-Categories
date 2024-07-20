@@ -3,6 +3,8 @@ using Categories.API.v1.Request;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
+namespace Categories.API.v1.Controller;
+
 [ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1")]
