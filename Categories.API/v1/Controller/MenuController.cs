@@ -1,7 +1,7 @@
-using Categories.API.v1.Model;
-using Categories.API.v1.Request;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Categories.API.v1.Model;
+using Categories.API.v1.Request;
 
 namespace Categories.API.v1.Controller;
 
@@ -11,9 +11,11 @@ namespace Categories.API.v1.Controller;
 public class MenuController : ControllerBase
 {
     private readonly IMediator _mediator;
-    public MenuController(IMediator mediator)
+    private readonly ILogger<MenuController> _logger;
+    public MenuController(IMediator mediator, ILogger<MenuController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
     [HttpPost("create")]
@@ -30,6 +32,7 @@ public class MenuController : ControllerBase
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Error adding menu item: {ErrorMessage}", ex.Message);
             return BadRequest(ex.Message);
         }
     }
@@ -48,6 +51,7 @@ public class MenuController : ControllerBase
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Error adding menu item: {ErrorMessage}", ex.Message);
             return BadRequest(ex.Message);
         }
     }

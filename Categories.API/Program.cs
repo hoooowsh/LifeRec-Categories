@@ -1,5 +1,6 @@
 using System.Net.NetworkInformation;
 using System.Reflection;
+using Categories.API.Middleware;
 using Categories.API.v1.DBRepo;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
@@ -60,14 +61,20 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-// Use Swagger in development for API documentation
+// Use Swagger and logger middleware in development for API documentation
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseMiddleware<RequestLoggerMiddleware>();
 }
 
-app.UseHttpsRedirection();
+// Only use HTTPS in production
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

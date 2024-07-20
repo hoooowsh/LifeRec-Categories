@@ -4,16 +4,19 @@ using Categories.API.v1.Controller;
 using Categories.API.v1.Model;
 using MediatR;
 using Categories.API.v1.Request;
+using Microsoft.Extensions.Logging;
 
 public class MenuControllerTests
 {
-    private readonly Mock<IMediator> _mediatorMock = new Mock<IMediator>();
+    private readonly Mock<IMediator> _mediatorMock;
+    private readonly Mock<ILogger<MenuController>> _logger;
     private readonly MenuController _menuController;
 
     public MenuControllerTests()
     {
         _mediatorMock = new Mock<IMediator>();
-        _menuController = new MenuController(_mediatorMock.Object);
+        _logger = new Mock<ILogger<MenuController>>();
+        _menuController = new MenuController(_mediatorMock.Object, _logger.Object);
     }
 
     [Fact(DisplayName = "AddMenuItem_Success")]
