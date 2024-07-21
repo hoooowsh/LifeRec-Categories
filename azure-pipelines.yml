@@ -9,6 +9,7 @@ pool:
 jobs:
 - job: RunTests
   steps:
+  - script: echo "Running tests..."
   - checkout: self
   - task: DotNetCoreCLI@2
     inputs:
@@ -18,11 +19,13 @@ jobs:
     displayName: 'Run Unit Tests'
 
 - job: PushToGithub
+  displayName: 'Push To GitHub'
+  condition: and(succeeded(), eq(variables['Build.Reason'], 'IndividualCI'))
   dependsOn: RunTests
   steps:
+  - script: echo "Pushing to GitHub..."
   - checkout: self
     persistCredentials: true
-  
   - bash: |
       git clone --mirror https://dev.azure.com/LifeRec/LifeRecApp/_git/LifeRec-Categories $(build.sourcesdirectory)/LifeRec-Categories
       cd $(build.sourcesdirectory)/LifeRec-Categories
