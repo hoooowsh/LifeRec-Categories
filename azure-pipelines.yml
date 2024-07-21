@@ -10,7 +10,7 @@ jobs:
 - job: RunTests
   steps:
   - checkout: self
-  - task: DoeNetCoreCLI@2
+  - task: DotNetCoreCLI@2
     inputs:
       command: 'test'
       projects: '**/*Tests/*.csproj'
