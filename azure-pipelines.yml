@@ -7,7 +7,18 @@ pool:
   name: Agent-Sheng
 
 jobs:
+- job: RunTests
+  steps:
+  - checkout: self
+  - task: DoeNetCoreCLI@2
+    inputs:
+      command: 'test'
+      projects: '**/*Tests/*.csproj'
+      arguments: '--configuration $(BuildConfiguration)'    
+    displayName: 'Run Unit Tests'
+
 - job: PushToGithub
+  dependsOn: RunTests
   steps:
   - checkout: self
     persistCredentials: true
