@@ -1,4 +1,3 @@
-using System.Net.NetworkInformation;
 using System.Reflection;
 using Categories.API.Middleware;
 using Categories.API.v1.DBRepo;
