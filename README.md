@@ -44,10 +44,3 @@ This is a micro-service for LifeRec, mainly serve for categories related CRUD Op
 
 #### MongoDB set up
 - Public IP (Ex: Library) cannot connect to MongoDB even MongoDB is open for all IP addresses
-
-## July 15 - 20
-#### Project initialization
-- Set up API project and test project templates, connect to MongoDB
-
-## July 21
-- Set up K8
