@@ -36,3 +36,9 @@ public class GetMenuItemsResModel
 {
     public List<MenuItemDBModel>? MenuItems { get; set; }
 }
+
+public class GetMenuItemReqModel
+{
+    [Required]
+    public string Id { get; set; } = string.Empty;
+}
