@@ -6,17 +6,17 @@ using MediatR;
 using Categories.API.v1.Request;
 using Microsoft.Extensions.Logging;
 
-public class MenuControllerTests
+public class MenuItemControllerTests
 {
     private readonly Mock<IMediator> _mediatorMock;
-    private readonly Mock<ILogger<MenuController>> _logger;
-    private readonly MenuController _menuController;
+    private readonly Mock<ILogger<MenuItemController>> _logger;
+    private readonly MenuItemController _menuItemController;
 
-    public MenuControllerTests()
+    public MenuItemControllerTests()
     {
         _mediatorMock = new Mock<IMediator>();
-        _logger = new Mock<ILogger<MenuController>>();
-        _menuController = new MenuController(_mediatorMock.Object, _logger.Object);
+        _logger = new Mock<ILogger<MenuItemController>>();
+        _menuItemController = new MenuItemController(_mediatorMock.Object, _logger.Object);
     }
 
     [Fact(DisplayName = "AddMenuItem_Success")]
@@ -39,7 +39,7 @@ public class MenuControllerTests
         _mediatorMock.Setup(x => x.Send(request, It.IsAny<CancellationToken>())).ReturnsAsync(Unit.Value);
 
         // Act
-        var result = await _menuController.AddMenuItem(model);
+        var result = await _menuItemController.AddMenuItem(model);
 
         // Assert
         Assert.IsType<OkObjectResult>(result);

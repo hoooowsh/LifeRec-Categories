@@ -8,17 +8,17 @@ namespace Categories.API.v1.Controller;
 [ApiController]
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1")]
-public class MenuController : ControllerBase
+public class MenuItemController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly ILogger<MenuController> _logger;
-    public MenuController(IMediator mediator, ILogger<MenuController> logger)
+    private readonly ILogger<MenuItemController> _logger;
+    public MenuItemController(IMediator mediator, ILogger<MenuItemController> logger)
     {
         _mediator = mediator;
         _logger = logger;
     }
 
-    [HttpPost("create")]
+    [HttpPost("")]
     public async Task<IActionResult> AddMenuItem([FromBody] AddMenuItemReqModel model)
     {
         try
@@ -37,6 +37,25 @@ public class MenuController : ControllerBase
         }
     }
 
+    [HttpGet("")]
+    public async Task<IActionResult> GetMenuItemById([FromQuery] string id)
+    {
+        try
+        {
+            var request = new GetMenuItemReq
+            {
+                Id = id
+            };
+            var result = await _mediator.Send(request);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting menu item: {ErrorMessage}", ex.Message);
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpGet("get-list")]
     public async Task<IActionResult> GetMenuItemsByOwner([FromQuery] GetMenuItemsReqModel model)
     {
@@ -51,7 +70,7 @@ public class MenuController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error adding menu item: {ErrorMessage}", ex.Message);
+            _logger.LogError(ex, "Error getting menu items: {ErrorMessage}", ex.Message);
             return BadRequest(ex.Message);
         }
     }

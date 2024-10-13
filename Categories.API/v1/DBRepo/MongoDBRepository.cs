@@ -9,6 +9,7 @@ public interface IMongoDBRepository
 {
     public Task CreateMenuItem(string collectionName, MenuItemDBModel category);
     public Task<List<MenuItemDBModel>> GetMenuItemsByOwner(string collectionName, string owner, int page);
+    public Task<MenuItemDBModel> GetMenuItemById(string collectionName, string id);
 }
 
 public class MongoDBRepository : IMongoDBRepository
@@ -21,7 +22,10 @@ public class MongoDBRepository : IMongoDBRepository
         _mongoClient = mongoClient;
         _categoriesDatabase = _mongoClient.GetDatabase(MongoDBConstants.DatabaseName);
     }
-
+    
+    /**
+    * Create menu item in database
+    */
     public async Task CreateMenuItem(string collectionName, MenuItemDBModel menuItem)
     {
         try
@@ -38,6 +42,9 @@ public class MongoDBRepository : IMongoDBRepository
         }
     }
 
+    /**
+    * Get menu items list by owner and page
+    */
     public async Task<List<MenuItemDBModel>> GetMenuItemsByOwner(string collectionName, string owner, int page)
     {
         try
@@ -52,6 +59,26 @@ public class MongoDBRepository : IMongoDBRepository
                 .Limit(MongoDBConstants.PageSize)
                 .ToListAsync();
             return menuItems;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseException(e.Message);
+        }
+    }
+
+    /**
+    * Get menu item by item id
+    */
+    public async Task<MenuItemDBModel> GetMenuItemById(string collectionName, string id)
+    {
+        try
+        {
+            // Init collection
+            var collection = _categoriesDatabase.GetCollection<MenuItemDBModel>(collectionName);
+
+            // Get the item
+            var menuItem = await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
+            return menuItem;
         }
         catch (Exception e)
         {
