@@ -56,6 +56,25 @@ public class MenuItemController : ControllerBase
         }
     }
 
+    [HttpDelete("")]
+    public async Task<IActionResult> DeleteMenuItemById([FromQuery] string id)
+    {
+        try
+        {
+            var request = new DeleteMenuItemReq
+            {
+                Id = id
+            };
+            await _mediator.Send(request);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting menu item: {ErrorMessage}", ex.Message);
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpGet("get-list")]
     public async Task<IActionResult> GetMenuItemsByOwner([FromQuery] GetMenuItemsReqModel model)
     {
