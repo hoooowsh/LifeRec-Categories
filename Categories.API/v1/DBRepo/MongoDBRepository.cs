@@ -2,6 +2,7 @@ using MongoDB.Driver;
 using Categories.API.MongoDBModel;
 using Categories.API.Configuration;
 using Categories.API.Utils;
+using MediatR;
 
 namespace Categories.API.v1.DBRepo;
 
@@ -10,6 +11,7 @@ public interface IMongoDBRepository
     public Task CreateMenuItem(string collectionName, MenuItemDBModel category);
     public Task<List<MenuItemDBModel>> GetMenuItemsByOwner(string collectionName, string owner, int page);
     public Task<MenuItemDBModel> GetMenuItemById(string collectionName, string id);
+    public Task<Unit> DeleteMenuItemById(string collectionName, string id);
 }
 public class MongoDBRepository : IMongoDBRepository
 {
@@ -21,7 +23,7 @@ public class MongoDBRepository : IMongoDBRepository
         _mongoClient = mongoClient;
         _categoriesDatabase = _mongoClient.GetDatabase(MongoDBConstants.DatabaseName);
     }
-    
+
     /**
     * Create menu item in database
     */
@@ -78,6 +80,26 @@ public class MongoDBRepository : IMongoDBRepository
             // Get the item
             var menuItem = await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
             return menuItem;
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseException(e.Message);
+        }
+    }
+
+    /**
+    * Delete menu item by item id
+    */
+    public async Task<Unit> DeleteMenuItemById(string collectionName, string id)
+    {
+        try
+        {
+            // Init collection
+            var collection = _categoriesDatabase.GetCollection<MenuItemDBModel>(collectionName);
+
+            // Delete the item
+            await collection.DeleteOneAsync(x => x.Id == id);
+            return Unit.Value;
         }
         catch (Exception e)
         {
